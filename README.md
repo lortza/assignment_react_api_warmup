@@ -1,2 +1,6 @@
 # assignment_react_api_warmup
-Adding the UD to the CR for Users... APIs in React
+Viking Code School assignment: Adding the UD to the CR for Users... APIs in React
+
+[Anne Richardson](https://github.com/lortza)
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
