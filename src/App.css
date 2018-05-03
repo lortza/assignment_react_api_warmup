@@ -9,8 +9,8 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  padding: 20px 5px;
+  margin-bottom: 20px;
   color: white;
 }
 
@@ -20,6 +20,10 @@
 
 .App-intro {
   font-size: large;
+}
+
+.loading-spinner {
+  height: 50px;
 }
 
 @keyframes App-logo-spin {
