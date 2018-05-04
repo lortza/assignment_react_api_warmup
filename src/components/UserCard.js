@@ -14,7 +14,7 @@ class UserCard extends React.Component {
           />
           <div className="card-block">
             <h4>{first_name} {last_name}</h4><br/>
-            <i id={id} onClick={deleteUser} className="fas fa-times-circle"></i>
+            <i data-id={id} onClick={deleteUser} className="fas fa-times-circle"></i>
 
           </div>
         </div>

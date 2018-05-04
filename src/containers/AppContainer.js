@@ -19,7 +19,8 @@ class AppContainer extends React.Component {
     this.setState({isFetching: true})
     // After component mounts, call the API to get the
     // users, then update state which triggers re-render
-    fetch('https://reqres.in/api/users?delay=2')
+    // fetch('https://reqres.in/api/users?delay=2')
+    fetch('https://reqres.in/api/users')
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -31,23 +32,31 @@ class AppContainer extends React.Component {
 
   deleteUser(e){
     e.preventDefault()
-    let userId = e.target.id
+    let users = this.state.users
+    console.log(users)
+    let userId = Number(e.target.getAttribute('data-id'))
+
     console.log(userId)
 
     const options = {
       headers: {
         'content-type': 'application/json'
       },
-      credentials: 'same-origin',
-      mode: 'cors',
       method: 'DELETE'
     }
 
     fetch(`https://reqres.in/api/user/${userId}`, options)
       .then( (response) => {
-        if(response.status === 204){
-          console.log('yay. deleted.')
+        if(response.status !== 204){
+          throw new Error(`${ response.status } ${ response.statusText }`)
         }
+        let remainingUsers = users.filter( user => Number(user.id) !== userId )
+        this.setState({
+          users: remainingUsers
+        })
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
