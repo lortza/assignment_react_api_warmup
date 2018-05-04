@@ -7,6 +7,7 @@ class AppContainer extends React.Component {
   constructor(){
     super()
     this.state = {
+      baseUrl: 'https://reqres.in/api',
       users: [],
       isFetching: false
     }
@@ -20,7 +21,7 @@ class AppContainer extends React.Component {
     // After component mounts, call the API to get the
     // users, then update state which triggers re-render
     // fetch('https://reqres.in/api/users?delay=2')
-    fetch('https://reqres.in/api/users')
+    fetch(`${this.state.baseUrl}/users`)
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -33,10 +34,7 @@ class AppContainer extends React.Component {
   deleteUser(e){
     e.preventDefault()
     let users = this.state.users
-    console.log(users)
     let userId = Number(e.target.getAttribute('data-id'))
-
-    console.log(userId)
 
     const options = {
       headers: {
@@ -45,7 +43,7 @@ class AppContainer extends React.Component {
       method: 'DELETE'
     }
 
-    fetch(`https://reqres.in/api/user/${userId}`, options)
+    fetch(`${this.state.baseUrl}/user/${userId}`, options)
       .then( (response) => {
         if(response.status !== 204){
           throw new Error(`${ response.status } ${ response.statusText }`)
@@ -61,27 +59,42 @@ class AppContainer extends React.Component {
   }
 
 
-  onAddUser = (e) => {
+  addOrUpdateUser = (e) => {
     e.preventDefault()
     const form = e.target
     const body = serialize(form, {hash: true})
-    console.log(body)
 
-    // Create headers to set the content type to json
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
+    // Add image if one is missing
+    if(!body.avatar){
+      body.avatar = 'http://penguinink.co.uk/wp-content/uploads/2018/01/134-127x127.jpg'
+      // body.avatar = 'http://via.placeholder.com/127x127'
+    }
+
+    // Determine if this is a POST or PUT request
+    let httpMethod;
+    let urlEnd;
+
+    if(body.id){
+      httpMethod = 'PUT'
+      urlEnd = `/${body.id}`
+    } else {
+      httpMethod = 'POST'
+      urlEnd = ''
+    }
 
     // Set options, and stringify the body to JSON
     const options = {
-      headers,
-      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: httpMethod,
       body: JSON.stringify(body),
     }
 
     // Before performing the fetch, set isFetching to true
     this.setState({isFetching: true})
 
-    fetch('https://reqres.in/api/users', options)
+    fetch(`${this.state.baseUrl}/user${urlEnd}`, options)
       .then( (response) => {
         if(!response.ok){
           throw new Error(`${response.status} ${response.statusText}`)
@@ -108,7 +121,7 @@ class AppContainer extends React.Component {
   }
 
   render() {
-    return <App onAddUser={this.onAddUser} deleteUser={this.deleteUser} {...this.state} />
+    return <App addOrUpdateUser={this.addOrUpdateUser} deleteUser={this.deleteUser} {...this.state} />
   }
 }
 

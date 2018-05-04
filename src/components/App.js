@@ -4,14 +4,14 @@ import UserList from './UserList'
 import UserForm from './UserForm'
 
 
-const App = ({users, isFetching, error, onAddUser, deleteUser}) => {
+const App = ({users, isFetching, error, addOrUpdateUser, deleteUser}) => {
   return (
     <div className="App">
       <div className="App-header">
-        <h1>reqres.in API Contact Cards</h1>
+        <h1>React CRUD Users with reqres.in API</h1>
       </div>
       <UserForm
-        onSubmit={onAddUser}
+        onSubmit={addOrUpdateUser}
         error={error}
       />
       <UserList users={users} isFetching={isFetching} deleteUser={deleteUser}/>
