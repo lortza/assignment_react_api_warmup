@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../components/App'
-import serialize from 'form-serialize'
+import serialize from 'form-serialize' // npm install form-serialize --save
 
 
 class AppContainer extends React.Component {
@@ -10,9 +10,11 @@ class AppContainer extends React.Component {
       users: [],
       isFetching: false
     }
+    this.getAllUsers = this.getAllUsers.bind(this)
+    this.deleteUser = this.deleteUser.bind(this)
   }
 
-  componentDidMount() {
+  getAllUsers() {
     // Before performing the fetch, set isFetching to true
     this.setState({isFetching: true})
     // After component mounts, call the API to get the
@@ -26,6 +28,29 @@ class AppContainer extends React.Component {
         })
       })
   }
+
+  deleteUser(e){
+    e.preventDefault()
+    let userId = e.target.id
+    console.log(userId)
+
+    const options = {
+      headers: {
+        'content-type': 'application/json'
+      },
+      credentials: 'same-origin',
+      mode: 'cors',
+      method: 'DELETE'
+    }
+
+    fetch(`https://reqres.in/api/user/${userId}`, options)
+      .then( (response) => {
+        if(response.status === 204){
+          console.log('yay. deleted.')
+        }
+      })
+  }
+
 
   onAddUser = (e) => {
     e.preventDefault()
@@ -69,8 +94,12 @@ class AppContainer extends React.Component {
        })//catch
   }
 
+  componentDidMount() {
+    this.getAllUsers()
+  }
+
   render() {
-    return <App onAddUser={this.onAddUser} {...this.state} />
+    return <App onAddUser={this.onAddUser} deleteUser={this.deleteUser} {...this.state} />
   }
 }
 
