@@ -4,7 +4,7 @@ import UserList from './UserList'
 import UserForm from './UserForm'
 
 
-const App = ({users, isFetching, error, addOrUpdateUser, deleteUser}) => {
+const App = ({users, isFetching, error, addOrUpdateUser, editUser, deleteUser}) => {
   return (
     <div className="App">
       <div className="App-header">
@@ -14,7 +14,7 @@ const App = ({users, isFetching, error, addOrUpdateUser, deleteUser}) => {
         onSubmit={addOrUpdateUser}
         error={error}
       />
-      <UserList users={users} isFetching={isFetching} deleteUser={deleteUser}/>
+      <UserList users={users} isFetching={isFetching} deleteUser={deleteUser} editUser={editUser}/>
     </div>
   );
 }

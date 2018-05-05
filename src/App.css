@@ -1,6 +1,18 @@
-.fa-times-circle {
-  color: red;
+i:hover {
+  cursor: pointer;
 }
+
+.fa-times-circle {
+  color: pink;
+  float: right;
+}
+.fa-times-circle:hover {color: red;}
+
+.fa-edit {
+  color: lightblue;
+  float: left;
+}
+.fa-edit:hover {color: blue;}
 
 input[type='text']::placeholder {
   color: lightgray;

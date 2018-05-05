@@ -10,3 +10,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Run the app with `npm start`
 
 Browse to `localhost:3000`
+
+## Features
+
+- Loads users from https://reqres.in/api
+- Add users (post to API)
+- Delete users (delete from API)
+- WIP edit user

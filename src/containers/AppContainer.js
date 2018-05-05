@@ -8,11 +8,18 @@ class AppContainer extends React.Component {
     super()
     this.state = {
       baseUrl: 'https://reqres.in/api',
+      isFetching: false,
       users: [],
-      isFetching: false
+      user: {
+        id: '',
+        first_name: '',
+        last_name: '',
+        avatar: ''
+      }
     }
     this.getAllUsers = this.getAllUsers.bind(this)
     this.deleteUser = this.deleteUser.bind(this)
+    this.editUser = this.editUser.bind(this)
   }
 
   getAllUsers() {
@@ -34,7 +41,7 @@ class AppContainer extends React.Component {
   deleteUser(e){
     e.preventDefault()
     let users = this.state.users
-    let userId = Number(e.target.getAttribute('data-id'))
+    let userId = Number(e.target.parentElement.parentElement.getAttribute('data-id'))
 
     const options = {
       headers: {
@@ -56,6 +63,18 @@ class AppContainer extends React.Component {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  editUser(e){
+    e.preventDefault()
+
+    let userId = Number(e.target.parentElement.parentElement.getAttribute('data-id'))
+    let user = this.state.users.filter((user) => ( Number(user.id) === userId ))
+
+    this.setState({
+      user: user
+    })
+    return false;
   }
 
 
@@ -121,7 +140,7 @@ class AppContainer extends React.Component {
   }
 
   render() {
-    return <App addOrUpdateUser={this.addOrUpdateUser} deleteUser={this.deleteUser} {...this.state} />
+    return <App addOrUpdateUser={this.addOrUpdateUser} deleteUser={this.deleteUser} editUser={this.editUser} {...this.state} />
   }
 }
 
