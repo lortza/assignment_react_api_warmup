@@ -3,9 +3,9 @@ import UserCard from './UserCard'
 
 
 
-const UserList = ({users, isFetching, deleteUser, editUser}) => {
+const UserList = ({users, isFetching, deleteUser, onEditUserClick}) => {
   const userList = users.map((user) => {
-    return <UserCard user={user} key={user.id} deleteUser={deleteUser} editUser={editUser}/>
+    return <UserCard user={user} key={user.id} deleteUser={deleteUser} onEditUserClick={onEditUserClick}/>
   })
 
   return (
